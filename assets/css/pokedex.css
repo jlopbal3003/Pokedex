@@ -1,0 +1,438 @@
+@import "../../node_modules/@fontsource-variable/outfit/index.css";
+
+*{
+    font-family: 'Outfit Variable', sans-serif;
+}
+
+/* ------------ Desactivar borde focus de todos los elementos ------------ */
+*:focus {
+    outline: none !important;
+}
+
+/* ------------ Grid personalizado para mostrar 18 tipos en la misma fila ------------ */
+
+@media (min-width: 1280px) {
+    .grid-cols-18 {
+        grid-template-columns: repeat(18, minmax(0, 1fr)) !important;
+    }
+}
+
+/* ------------ Opacidad para el selector de tipos ------------ */
+
+.opacity-100{
+    opacity: 100%;
+}
+
+/* ------------ Altura y peso de los Pokémon ------------ */
+
+.card .footer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.card .footer div {
+    margin-top: 1rem;
+    text-align: center;
+    margin-left: 1.2rem;
+    margin-bottom: 1.2rem;
+    padding-right: 1.2rem;
+    border-right: 1px solid rgb(0 0 0 / 40%);
+}
+
+.card .footer div:first-child {
+    margin-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.card .footer div:last-child {
+    border-right: 0;
+    padding-right: 1.2rem;
+}
+
+.card .footer div .count {
+    font-size: 1.2rem;
+    color: rgb(0 0 0 / 80%);
+}
+
+/* ------------Tipos de los Pokémon------------ */
+/* ------------NORMAL------------ */
+
+.bg-normal {
+    background-color: #f1f1ec;
+}
+
+.bg-normal:hover,
+.bg-card-normal {
+    background-color: #e4e2d8;
+}
+
+.id-normal {
+    color: #aeab8f;
+}
+
+.bg-type-normal {
+    background-color: #aeab8f;
+}
+
+/* ------------FIGHTING------------ */
+
+.bg-fighting {
+    background-color: #ffdbd2;
+}
+
+.bg-fighting:hover,
+.bg-card-fighting {
+    background-color: #fcb8a6;
+}
+
+.id-fighting {
+    color: #c80000;
+}
+
+.bg-type-fighting {
+    background-color: #c80000;
+}
+
+/* ------------FLYING------------ */
+
+.bg-flying {
+    background-color: #f2ecff;
+}
+
+.bg-flying:hover,
+.bg-card-flying {
+    background-color: #e5d9ff;
+}
+
+.id-flying {
+    color: #a990ff;
+}
+
+.bg-type-flying {
+    background-color: #a990ff;
+}
+
+/* ------------POISON------------ */
+
+.bg-poison {
+    background-color: #f5dcf7;
+}
+
+.bg-poison:hover,
+.bg-card-poison {
+    background-color: #e9baef;
+}
+
+.id-poison {
+    color: #ad01cb;
+}
+
+.bg-type-poison {
+    background-color: #ad01cb;
+}
+
+/* ------------GROUND------------ */
+
+.bg-ground {
+    background-color: #fdf3e4;
+}
+
+.bg-ground:hover,
+.bg-card-ground {
+    background-color: #fbe8ca;
+}
+
+.id-ground {
+    color: #e6bb61;
+}
+
+.bg-type-ground {
+    background-color: #e6bb61;
+}
+
+/* ------------ROCK------------ */
+
+.bg-rock {
+    background-color: #faecd8;
+}
+
+.bg-rock:hover,
+.bg-card-rock {
+    background-color: #f3d9b1;
+}
+
+.id-rock {
+    color: #c59101;
+}
+
+.bg-type-rock {
+    background-color: #c59101;
+}
+
+/* ------------BUG------------ */
+
+.bg-bug {
+    background-color: #f1f5dc;
+}
+
+.bg-bug:hover,
+.bg-card-bug {
+    background-color: #e2eab9;
+}
+
+.id-bug {
+    color: #9cc21d;
+}
+
+.bg-type-bug {
+    background-color: #9cc21d;
+}
+
+/* ------------GHOST------------ */
+
+.bg-ghost {
+    background-color: #e6dced;
+}
+
+.bg-ghost:hover,
+.bg-card-ghost {
+    background-color: #ccbadb;
+}
+
+.id-ghost {
+    color: #653993;
+}
+
+.bg-type-ghost {
+    background-color: #653993;
+}
+
+/* ------------STEEL------------ */
+
+.bg-steel {
+    background-color: #f0f0f5;
+}
+
+.bg-steel:hover,
+.bg-card-steel {
+    background-color: #e1e2eb;
+}
+
+.id-steel {
+    color: #a6a9c5;
+}
+
+.bg-type-steel {
+    background-color: #a6a9c5;
+}
+
+/* ------------FIRE------------ */
+
+.bg-fire {
+    background-color: #ffe8d8;
+}
+
+.bg-fire:hover,
+.bg-card-fire {
+    background-color: #ffd1b2;
+}
+
+.id-fire {
+    color: #ff7111;
+}
+
+.bg-type-fire {
+    background-color: #ff7111;
+}
+
+/* ------------WATER------------ */
+
+.bg-water {
+    background-color: #ebe9ff;
+}
+
+.bg-water:hover,
+.bg-card-water {
+    background-color: #d6d2ff;
+}
+
+.id-water {
+    color: #717ffe;
+}
+
+.bg-type-water {
+    background-color: #717ffe;
+}
+
+/* ------------GRASS------------ */
+
+.bg-grass {
+    background-color: #e5f7db;
+}
+
+.bg-grass:hover,
+.bg-card-grass {
+    background-color: #caefb6;
+}
+
+.id-grass {
+    color: #3bcb02;
+}
+
+.bg-type-grass {
+    background-color: #3bcb02;
+}
+
+/* ------------ELECTRIC------------ */
+
+.bg-electric {
+    background-color: #fff8de;
+}
+
+.bg-electric:hover,
+.bg-card-electric {
+    background-color: #fff1be;
+}
+
+.id-electric {
+    color: #ffd625;
+}
+
+.bg-type-electric {
+    background-color: #ffd625;
+}
+
+/* ------------PSYCHIC------------ */
+
+.bg-psychic {
+    background-color: #ffe5ee;
+}
+
+.bg-psychic:hover,
+.bg-card-psychic {
+    background-color: #ffcadd;
+}
+
+.id-psychic {
+    color: #fe509b;
+}
+
+.bg-type-psychic {
+    background-color: #fe509b;
+}
+
+/* ------------ICE------------ */
+
+.bg-ice {
+    background-color: #edf9fc;
+}
+
+.bg-ice:hover,
+.bg-card-ice {
+    background-color: #daf3f9;
+}
+
+.id-ice {
+    color: #88dced;
+}
+
+.bg-type-ice {
+    background-color: #88dced;
+}
+
+/* ------------DRAGON------------ */
+
+.bg-dragon {
+    background-color: #ecdbfe;
+}
+
+.bg-dragon:hover,
+.bg-card-dragon {
+    background-color: #d7b8fc;
+}
+
+.id-dragon {
+    color: #6622ef;
+}
+
+.bg-type-dragon {
+    background-color: #6622ef;
+}
+
+/* ------------DARK------------ */
+
+.bg-dark {
+    background-color: #dedede;
+}
+
+.bg-dark:hover,
+.bg-card-dark {
+    background-color: #bebebe;
+}
+
+.id-dark {
+    color: #494949;
+}
+
+.bg-type-dark {
+    background-color: #494949;
+}
+
+/* ------------FAIRY------------ */
+
+.bg-fairy {
+    background-color: #fff0f7;
+}
+
+.bg-fairy:hover,
+.bg-card-fairy {
+    background-color: #ffe1f0;
+}
+
+.id-fairy {
+    color: #faa5d2;
+}
+
+.bg-type-fairy {
+    background-color: #faa5d2;
+}
+
+/* ------------UNKNOWN------------ */
+
+.bg-unknown {
+    background-color: #ffffff;
+}
+
+.bg-unknown:hover,
+.bg-card-unknown {
+    background-color: #e5e5e5;
+}
+
+.id-unknown {
+    color: #777777;
+}
+
+.bg-type-unknown {
+    background-color: #777777;
+}
+
+/* ------------SHADOW------------ */
+
+.bg-shadow {
+    background-color: #e7d8f4;
+}
+
+.bg-shadow:hover,
+.bg-card-shadow {
+    background-color: #ceb2e8;
+}
+
+.id-shadow {
+    color: #5a17b5;
+}
+
+.bg-type-shadow {
+    background-color: #5a17b5;
+}

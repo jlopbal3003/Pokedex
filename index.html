@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Jose Antonio López Balastegui" />
+    <meta name="description" content="Explora la PokeAPI de la primera generación y descubre información detallada sobre los Pokémon clásicos.">
+    <link rel="icon" type="image/x-icon" href="./assets/icons/pokeball.svg" />
+    <link href="./node_modules/daisyui/dist/full.css" rel="stylesheet">
+    <link href="./assets/css/output.css" rel="stylesheet">
+    <link href="./assets/css/pokedex.css" rel="stylesheet">
+    <title>Pokédex</title>
+</head>
+
+<body>
+    <!-- Barra de navegación -->
+    <nav class="bg-[#f8f9fa] fixed w-full z-20 top-0 start-0 border-b border-gray-200">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 gap-2">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                <img src="./assets/icons/pokeball.svg" class="h-8" alt="Logo Pokédex" />
+                <span class="self-center text-2xl font-semibold whitespace-nowrap">Pokédex</span>
+            </div>
+            <!-- Barra de búsqueda escritorio -->
+            <div class="flex md:order-2 md:flex-1">
+                <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search"
+                    aria-expanded="false"
+                    class="md:hidden text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-full text-sm p-2.5 me-1">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                    <span class="sr-only">Buscar</span>
+                </button>
+                <div class="relative hidden md:block w-full">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                        <span class="sr-only">Icono de búsqueda</span>
+                    </div>
+                    <input type="text" id="search"
+                        class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-white focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Buscar por nombre o identificador" />
+                </div>
+            </div>
+            <!-- Barra de búsqueda móvil -->
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
+                <div class="relative mt-3 md:hidden">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                        <span class="sr-only">Icono de búsqueda</span>
+                    </div>
+                    <input type="text" id="search-responsive"
+                        class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-white focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Buscar por nombre o identificador" />
+                </div>
+            </div>
+        </div>
+        <!-- Listado de Pokémon -->
+        <div id="hs-basic-collapse-heading"
+            class="hs-collapse hidden w-full overflow-hidden transition-[height] duration-300"
+            aria-labelledby="hs-basic-collapse">
+            <!-- Cargar tipos de Pokémon -->
+            <div id="listaTipos"
+                class="bg-[#f8f9fa] p-[1rem] grid grid-cols-3 sm:grid-cols-6 md:grid-cols-6 lg:grid-cols-9 grid-cols-18 gap-5">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Listado de Pokémon -->
+    <div class="container mx-auto">
+        <div class="flex">
+            <div class="w-full mt-[72px] md:mt-[78px]">
+                <!-- Cargar listado de Pokémon -->
+                <div id="listaPokemon"
+                    class="p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <dialog id="modal" class="modal">
+        <div class="modal-box p-0 overflow-y-auto max-h-screen">
+            <!-- Modal Content -->
+            <div id="containerDetails" class="relative rounded-lg shadow">
+                <form method="dialog">
+                    <button
+                        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 outline-none shadow-none">✕</button>
+                </form>
+                <div>
+                    <div class="p-4 md:p-5">
+                        <h3 id="nameDetails"
+                            class="capitalize mb-1 mt-10 text-4xl font-bold text-[#2b2b2b] text-center break-words">
+                            Nombre</h3>
+                        <h3 id="idDetails"
+                            class="font-bold leading-none tracking-tight text-white text-center text-8xl sm:text-9xl">
+                            #0000</h3>
+                        <img class="w-[70%] mx-auto" id="spriteDetails"
+                            src="https://sg.portal-pokemon.com/play/resources/pokedex/img/pm/ca3db4aad5c85a525d9be86852b26db1db7a22c0.png" />
+                    </div>
+                    <div class="bg-white -mt-[25%] pt-[23%] px-4 pb-4 rounded-t-3xl rounded-b-lg">
+                        <!-- Detalles de tipos -->
+                        <div id="listaTiposDetails" class="types text-center">
+                            <span
+                                class="uppercase py-2 px-4 no-underline rounded-full bg-blue-500 text-white font-sans text-sm border-blue-500 btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Primary</span>
+                        </div>
+                        <!-- Detalles de peso y altura -->
+                        <div class="my-2 card">
+                            <div class="footer">
+                                <div class="followers">
+                                    <p id="weightDetails" class="font-bold text-[25px]">10bm</p>
+                                    <p class="count">Peso</p>
+                                </div>
+                                <div class="likes">
+                                    <p id="heightDetails" class="font-bold text-[25px]">1m</p>
+                                    <p class="count">Altura</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Detalles de estadísticas -->
+                        <div id="statsDetails">
+                            <div id="hpDetails" class="flex items-center justify-between mb-1">
+                                <div class="w-[20%]">
+                                    <span class="text-base font-medium text-red-600">PS</span>
+                                </div>
+                                <div class="w-[10%]">
+                                    <span id="hpStat" class="text-sm font-medium text-red-600 ml-2">45%</span>
+                                </div>
+                                <div class="w-[70%] bg-gray-200 rounded-full h-2.5 ml-2">
+                                    <div id="hpBar" class="bg-red-600 h-2.5 rounded-full w-[45%]"></div>
+                                </div>
+                            </div>
+
+                            <div id="attackDetails" class="flex items-center justify-between mb-1">
+                                <div class="w-[20%]">
+                                    <span class="text-base font-medium text-orange-600">ATQ</span>
+                                </div>
+                                <div class="w-[10%]">
+                                    <span id="attackStat" class="text-sm font-medium text-orange-600 ml-2">45%</span>
+                                </div>
+                                <div class="w-[70%] bg-gray-200 rounded-full h-2.5 ml-2">
+                                    <div id="attackBar" class="bg-orange-600 h-2.5 rounded-full w-[45%]"></div>
+                                </div>
+                            </div>
+                            <div id="defenseDetails" class="flex items-center justify-between mb-1">
+                                <div class="w-[20%]">
+                                    <span class="text-base font-medium text-yellow-600">DF</span>
+                                </div>
+                                <div class="w-[10%]">
+                                    <span id="defenseStat" class="text-sm font-medium text-yellow-600 ml-2">45%</span>
+                                </div>
+                                <div class="w-[70%] bg-gray-200 rounded-full h-2.5 ml-2">
+                                    <div id="defenseBar" class="bg-yellow-600 h-2.5 rounded-full w-[45%]"></div>
+                                </div>
+                            </div>
+                            <div id="specialAttackDetails" class="flex items-center justify-between mb-1">
+                                <div class="w-[20%]">
+                                    <span class="text-base font-medium text-blue-600">ATQ ESP</span>
+                                </div>
+                                <div class="w-[10%]">
+                                    <span id="specialAttackStat"
+                                        class="text-sm font-medium text-blue-600 ml-2">45%</span>
+                                </div>
+                                <div class="w-[70%] bg-gray-200 rounded-full h-2.5 ml-2">
+                                    <div id="specialAttackBar" class="bg-blue-600 h-2.5 rounded-full w-[45%]"></div>
+                                </div>
+                            </div>
+                            <div id="specialDefenseDetails" class="flex items-center justify-between mb-1">
+                                <div class="w-[20%]">
+                                    <span class="text-base font-medium text-green-600">DF ESP</span>
+                                </div>
+                                <div class="w-[10%]">
+                                    <span id="specialDefenseStat"
+                                        class="text-sm font-medium text-green-600 ml-2">45%</span>
+                                </div>
+                                <div class="w-[70%] bg-gray-200 rounded-full h-2.5 ml-2">
+                                    <div id="specialDefenseBar" class="bg-green-600 h-2.5 rounded-full w-[45%]"></div>
+                                </div>
+                            </div>
+                            <div id="velocityDetails" class="flex items-center justify-between mb-1">
+                                <div class="w-[20%]">
+                                    <span class="text-base font-medium text-pink-600">VEL</span>
+                                </div>
+                                <div class="w-[10%]">
+                                    <span id="velocityStat" class="text-sm font-medium text-pink-600 ml-2">45%</span>
+                                </div>
+                                <div class="w-[70%] bg-gray-200 rounded-full h-2.5 ml-2">
+                                    <div id="velocityBar" class="bg-pink-600 h-2.5 rounded-full w-[45%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+
+    <!-- Botón para mostrar filtro por tipos -->
+    <div class="fixed bottom-0 right-0 p-8">
+        <button type="button"
+            class="duration-200 hs-collapse-toggle bg-[#4a90e2] hover:bg-[#307ece] text-white rounded-full size-16 flex items-center justify-center"
+            id="hs-basic-collapse" data-hs-collapse="#hs-basic-collapse-heading">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-8" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                    d="M19.875 6.27a2.225 2.225 0 0 1 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033z" />
+                <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- JavaScript -->
+    <script type="text/javascript" src="./assets/js/main.js"></script>
+    <script src="./node_modules/@preline/collapse/index.js"></script>
+    <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
+</body>
+
+</html>
