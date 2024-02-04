@@ -1,5 +1,9 @@
 @import "../../node_modules/@fontsource-variable/outfit/index.css";
 
+html{
+    background-color: white !important;
+}
+
 *{
     font-family: 'Outfit Variable', sans-serif;
 }
